@@ -83,6 +83,7 @@ const scrapeFlights = async ({ origin, destination, departureDate }) => {
 
     const html = await page.content();
     require('fs').writeFileSync('pagina_resultados.html', html);
+    console.log(html);
 
     const alertSelector = '.alert.alert-warning';
     const alertExists = await page.$(alertSelector);
@@ -100,7 +101,7 @@ const scrapeFlights = async ({ origin, destination, departureDate }) => {
     // await delay(2000);
 
     console.log('Tentando clicar no botão "Econômica"...');
-const economySelector = 'th[aria-label*="Economy"] span';
+    const economySelector = 'th[aria-label*="Economy"] span';
 
 try {
   await page.waitForSelector(economySelector, { timeout: 30000 });
