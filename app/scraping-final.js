@@ -144,9 +144,9 @@ const scrapeFlights = async ({ origin, destination, departureDate }) => {
       console.error(`Erro ao tentar clicar em "Econômica": ${err.message}`);
 
       // Para debug:
-      await page.screenshot({ path: "erro_economica.png" });
-      const html = await page.content();
-      require("fs").writeFileSync("erro_economica.html", html);
+      // await page.screenshot({ path: "erro_economica.png" });
+      // const html = await page.content();
+      // require("fs").writeFileSync("erro_economica.html", html);
 
       return { result: 'Não foi possível localizar a coluna "Economy".' };
     }
