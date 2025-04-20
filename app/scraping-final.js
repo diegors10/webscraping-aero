@@ -81,6 +81,9 @@ const scrapeFlights = async ({ origin, destination, departureDate }) => {
     await page.click('button#submitSearch');
     await delay(3000);
 
+    const html = await page.content();
+    require('fs').writeFileSync('pagina_resultados.html', html);
+
     const alertSelector = '.alert.alert-warning';
     const alertExists = await page.$(alertSelector);
     if (alertExists) {
