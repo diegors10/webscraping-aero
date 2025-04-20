@@ -89,12 +89,31 @@ const scrapeFlights = async ({ origin, destination, departureDate }) => {
       return { result: alertMessage };
     }
 
+    // console.log('Tentando clicar no botão "Econômica"...');
+    // const economySelector = 'th[aria-label*="Economy"] span';
+    // await page.waitForSelector(economySelector, { timeout: 15000 });
+    // await page.click(economySelector);
+    // console.log('Botão "Econômica" clicado.');
+    // await delay(2000);
+
     console.log('Tentando clicar no botão "Econômica"...');
-    const economySelector = 'th[aria-label*="Economy"] span';
-    await page.waitForSelector(economySelector, { timeout: 15000 });
-    await page.click(economySelector);
-    console.log('Botão "Econômica" clicado.');
-    await delay(2000);
+const economySelector = 'th[aria-label*="Economy"] span';
+
+try {
+  await page.waitForSelector(economySelector, { timeout: 30000 });
+  await page.click(economySelector);
+  console.log('Botão "Econômica" clicado.');
+  await delay(2000);
+} catch (err) {
+  console.error(`Erro ao localizar ou clicar no botão "Econômica": ${err.message}`);
+
+  // Salvar screenshot e HTML para debug
+  await page.screenshot({ path: 'erro_economica.png' });
+  const html = await page.content();
+  require('fs').writeFileSync('erro_economica.html', html);
+
+  return { result: 'Não foi possível encontrar ou clicar no botão "Econômica". Verifique o seletor ou o carregamento da página.' };
+}
 
     console.log('Clicando no botão de mais informações...');
     const infoButtonSelector = 'button.open-modal-btn';
